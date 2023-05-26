@@ -1,0 +1,50 @@
+package bai1;
+
+public class PhongMayTinh extends PhongHoc {
+
+    private int soLuongMay;
+
+    public PhongMayTinh(int soLuongMay) {
+        this.soLuongMay = soLuongMay;
+    }
+
+    public PhongMayTinh(int soLuongMay, String maPhong, String dayNha, double dienTich, int soBongDen) {
+        super(maPhong, dayNha, dienTich, soBongDen);
+        this.soLuongMay = soLuongMay;
+    }
+
+    public int getSoLuongMay() {
+        return soLuongMay;
+    }
+
+    public void setSoLuongMay(int soLuongMay) {
+        this.soLuongMay = soLuongMay;
+    }
+
+    @Override
+    public boolean phongDatChuan() {
+        boolean datChuan = true;
+        double dientich = 10;
+        int soLuongDen = (int) (getDienTich() / dientich);
+
+        if (getSoBongDen() < soLuongDen) {
+            datChuan = false;
+        }
+
+        if (this instanceof PhongMayTinh) {
+            PhongMayTinh mt = (PhongMayTinh) this;
+            double dienTich = 1.5;
+            int soluongmay = (int)(getDienTich()/dienTich);
+            if(getSoLuongMay()<soluongmay){
+                datChuan = false;
+            }
+        }
+
+        return datChuan;
+    }
+
+    @Override
+    public String toString() {
+        return "PhongMayTinh{" + super.toString() + ", soLuongMay=" + soLuongMay + '}';
+    }
+}
