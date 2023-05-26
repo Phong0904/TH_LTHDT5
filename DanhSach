@@ -1,0 +1,120 @@
+package bai1;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+public class DanhSach {
+
+    private ArrayList<PhongHoc> phn = new ArrayList<>();
+
+    public void themDS(PhongHoc ph) {
+        String maPhongNew = ph.getMaPhong();
+        boolean trung = false;
+
+        for (PhongHoc p : phn) {
+            if (p.getMaPhong().equals(maPhongNew)) {
+                trung = true;
+                System.out.println("Khong the them vi trung ma");
+                break;
+            }
+        }
+        phn.add(ph);
+        System.out.println("Them thanh cong");
+    }
+
+    public void tim_phong(String maPhong) {
+        for (PhongHoc p : phn) {
+            if (p.getMaPhong().indexOf(maPhong) >= 0) {
+                System.out.println(p);
+            }
+        }
+    }
+
+    public void inDS() {
+        for (PhongHoc p : phn) {
+            System.out.println(p);
+        }
+    }
+
+    public void sap_xep_day_tang() {
+        Collections.sort(phn, new Comparator<PhongHoc>() {
+            @Override
+            public int compare(PhongHoc p1, PhongHoc p2) {
+                return p1.getDayNha().compareTo(p2.getDayNha());
+            }
+        });
+    }
+
+    public void sap_xep_dien_tich_giam() {
+        Collections.sort(phn, new Comparator<PhongHoc>() {
+            @Override
+            public int compare(PhongHoc p1, PhongHoc p2) {
+                if (p1.getDienTich() > p2.getDienTich()) {
+                    return -1;
+                } else if (p1.getDienTich() < p2.getDienTich()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+    }
+
+    public void sap_xep_bong_den_tang() {
+        Collections.sort(phn, new Comparator<PhongHoc>() {
+            @Override
+            public int compare(PhongHoc p1, PhongHoc p2) {
+                if (p1.getSoBongDen()< p2.getSoBongDen()) {
+                    return -1;
+                } else if (p1.getSoBongDen() > p2.getSoBongDen()) {
+                    return 1;
+                } else {
+                    return 0;
+                }
+            }
+        });
+    }
+    
+    public void cap_nhat_may_tinh(String maphong, int soluongmay){
+        for (PhongHoc p : phn) {
+            if(p instanceof PhongMayTinh && p.getMaPhong().equals(maphong)){
+                ((PhongMayTinh) p).setSoLuongMay(soluongmay);
+            }
+        }
+    }
+    
+    public void xoa(String maPhong){
+        for (PhongHoc p : phn) {
+            if(p.getMaPhong().equals(maPhong)){
+                System.out.print("Ban co muon xoa khong, có nhap 'yes', khong nhap 'no':  ");
+                Scanner sc = new Scanner(System.in);
+                String xacNhan = sc.nextLine();
+                
+                if(xacNhan.equalsIgnoreCase("yes")){
+                    phn.remove(p);
+                    System.out.println("Xoa thanh cong");
+                }else{
+                    System.out.println("Xac nhan 'no' nen phong chua duoc xoa");
+                }
+            }
+            return;
+        }
+    }
+    
+    public void inDSlon60(){
+        for (PhongHoc p : phn) {
+            if(p instanceof PhongMayTinh){
+                PhongMayTinh mt = (PhongMayTinh) p;
+                if(mt.getSoLuongMay()>=60){
+                    System.out.println(mt);
+                }
+            }
+        }
+    }
+    
+    public void tongphong(){
+        System.out.println("Tong phong hoc la: "+ phn.size());
+    }
+}
